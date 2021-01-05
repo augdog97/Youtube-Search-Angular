@@ -1,0 +1,14 @@
+
+<!-- 
+    1. Bind button to makeRequest method
+    2. Show the loading div if "loading" instance variable is true. 
+    3. Use the HTML pre tag to show the data object using the json pipe as it makes debugging objects easier.
+-->
+
+
+<h2> Basic Request</h2>
+<button type="button" (click)="makeRequest()">Make Request</button>
+<div *ngIf="loading">
+    Loading...
+</div>
+<pre>{{data | json}}</pre>

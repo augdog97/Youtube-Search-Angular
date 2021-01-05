@@ -120,5 +120,8 @@
       }
     }
   },
-  "defaultProject": "Youtube-Angular"
+  "defaultProject": "Youtube-Angular",
+  "cli": {
+    "analytics": "d2502ea9-f3a5-4007-b852-12189f7a22a1"
+  }
 }
