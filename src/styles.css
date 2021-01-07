@@ -111,3 +111,5 @@ ul.ui.list li:before {
   clear: both;
   width: 100%;
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

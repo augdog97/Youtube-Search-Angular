@@ -1,0 +1,28 @@
+
+<!-- 
+    1. Only show the Material UI loading cirlce if loading is true.
+    2. We bind loading and results outputs. 
+        - we use the (output)="action"
+        - for the loading output, we use loading = $event. 
+            -$event will be substitued with the value of the event that is emitted form the EventEmitter.
+            - This means, in SearchBoxComponent, when we call this.loading.emit(true) then $event will be true.
+        - For the results output we call the updateResults() function whenever a new set of results are emitted. This has the effect of updating our components results instance variable.
+-->
+<div class="container">
+    <div class="page-header">
+        <h1>YouTube Search</h1>
+        <mat-progress-spinner mode="indeterminate" *ngIf="loading" style="float: right;"></mat-progress-spinner>
+    </div>
+<div class="row">
+    <div class="input-group input-group-lg col-md-12">
+        <app-search-box
+        (loading)="loading = $event"
+        (results)=updateResults($event)></app-search-box>
+    </div>
+</div>
+<div class="row">
+    <app-search-result
+    *ngFor="let result of results"
+    [result]="result"></app-search-result>
+</div>
+</div>

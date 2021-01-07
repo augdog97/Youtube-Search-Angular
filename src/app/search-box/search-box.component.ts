@@ -1,17 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {Output} from '@angular/core';
-import { EventEmitter } from '@angular/core';
-import {ElementRef} from '@angular/core';
-import {Observable} from 'rxjs';
-import {map, filter, debounceTime} from 'rxjs/operators';
-import { fromEvent } from 'rxjs';
-import { throttleTime } from 'rxjs/operators';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/switch';
+import { Component, OnInit, Output, EventEmitter, ElementRef } from '@angular/core';
+import { Observable, fromEvent } from 'rxjs';
+import { map, debounceTime, filter, tap, switchMap } from 'rxjs/operators';
 import { SearchResult } from '../search-result.model';
-import {YoutubesearchService} from '../youtubesearch.service';
+import { YoutubesearchService } from '../youtubesearch.service';
 /**
  * 1. We say that this class implements ngOnInit becasue we want to use the NgOnInit life cycle call back.
  *  - If a class implements OnInit then the ngOnInit function will be called after the first change detection check.
@@ -57,14 +48,15 @@ export class SearchBoxComponent implements OnInit {
 
   ngOnInit(): void {
     // convert the `keyup` event into an observable stream
-    Observable.fromEvent(this.el.nativeElement, 'keyup')
-      .map((e: any) => e.target.value) // extract the value of the input
-      .filter((text: string) => text.length > 1) // filter out if empty
-      .debounceTime(250)                         // only once every 250ms
-      .do(() => this.loading.emit(true))         // enable loading
-      // search, discarding old events if new input comes in
-      .map((query: string) => this.youtube.search(query))
-      .switch()
+    fromEvent(this.el.nativeElement, 'keyup')
+      .pipe(
+        map((e: any) => e.target.value), // extract the value of the input
+        filter((text: string) => text.length > 1), // filter out if empty
+        debounceTime(250),                         // only once every 250ms
+        tap(() => this.loading.emit(true)),         // enable loading
+        // search, discarding old events if new input comes in
+        switchMap((query: string) => this.youtube.search(query)),
+      )
       // act on the return of the search
       .subscribe(
         (results: SearchResult[]) => { // on sucesss

@@ -4,6 +4,7 @@ import {map} from 'rxjs/operators';
 
 import { Observable } from 'rxjs';
 import { SearchResult } from './search-result.model';
+import { environment} from '../environments/environment';
 
 /**
  * 1. Injecting Http, and YOUTUBE API data.
@@ -18,7 +19,7 @@ import { SearchResult } from './search-result.model';
  */
 
 export const YOUTUBE_API_KEY =
-  'AIzaSyDOfT_BO81aEZScosfTYMruJobmpjqNeEk';
+  environment.youtube;
 export const YOUTUBE_API_URL =
   'https://www.googleapis.com/youtube/v3/search';
 
