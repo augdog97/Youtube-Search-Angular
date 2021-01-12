@@ -1,0 +1,24 @@
+
+# For the testing stage you must include all those lines so the tests run and finish. If  ng test doesnt have the flags that come after it, it will hang on that stage.
+
+image: node:latest
+
+before_script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+
+stages:
+    - production
+
+
+
+
+production:
+    type: deploy
+    stage: production
+    image: ruby:latest
+    script:
+        - dpl --provider=heroku --app=$HEROKU_APP_PRODUCTION --api-key=$HEROKU_API_KEY
+    only:
+        - master
