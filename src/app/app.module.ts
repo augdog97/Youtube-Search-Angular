@@ -32,7 +32,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
     HttpClientModule,
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
-    MatInputModule
+    MatInputModule,
   ],
   providers: [youTubeSearchInjectables],
   bootstrap: [AppComponent]
