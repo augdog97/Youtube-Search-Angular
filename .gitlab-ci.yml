@@ -18,14 +18,7 @@ production:
     stage: production
     image: ruby:latest
     script:
-        - pwd
-        - TP=./src/environments
-        - TF="$TP/environment"
-        - mkdir -p "$TP"
-        - printf "export const environment = { \n\t production:false,\n\t youtube:\'%s\' \n};\n" "$youtube" > "$TF"
-        - cat "$TF"
-        - cp "$TF" "$TF".ts
-        - find .
+        - echo   "youtube=$youtube" > .env
         - dpl --provider=heroku --app=$HEROKU_APP_PRODUCTION --api-key=$HEROKU_API_KEY
     only:
         - master
