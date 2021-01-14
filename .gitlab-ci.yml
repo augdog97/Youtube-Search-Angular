@@ -9,38 +9,16 @@ before_script:
     - gem install dpl
 
 stages:
-    - deploy
     - production
 
 
-cache:
-  paths:
-    - node_modules/
 
-deploy_stage:
-  stage: deploy
-  environment: Stage
-  only:
-    - master
-  script:
-    - rm ./package-lock.json
-    - npm install
-    - ./node_modules/@angular/cli/bin/ng test --progress false --single-run=true --watch=false
-    - ./node_modules/@angular/cli/bin/ng e2e --progress false --watch=false
-    - ./node_modules/@angular/cli/bin/ng build --progress false --prod --base-href tykt-stage.surge.sh
-    - ./node_modules/.bin/surge -p dist/ --domain tykt-stage.surge.sh
 
 production:
     type: deploy
     stage: production
     image: ruby:latest
     script:
-        - rm ./package-lock.json
-        - npm install
-        - ./node_modules/@angular/cli/bin/ng test --progress false --single-run=true  --watch=false
-        - ./node_modules/@angular/cli/bin/ng e2e --progress false --watch=false
-        - ./node_modules/@angular/cli/bin/ng build --progress false --prod --base-href tykt.surge.sh
-        - ./node_modules/.bin/surge -p dist/ --domain tykt.surge.sh
         - dpl --provider=heroku --app=$HEROKU_APP_PRODUCTION --api-key=$HEROKU_API_KEY
     only:
         - master
