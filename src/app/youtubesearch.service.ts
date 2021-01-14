@@ -4,7 +4,7 @@ import {map} from 'rxjs/operators';
 
 import { Observable } from 'rxjs';
 import { SearchResult } from './search-result.model';
-//import { environment} from '../environments/environment';
+import { environment} from '../environments/environment';
 
 
 /**
@@ -21,7 +21,7 @@ import { SearchResult } from './search-result.model';
 
 
 export const YOUTUBE_API_KEY =
-  process.env.youtube;
+  environment.API_URL;
 export const YOUTUBE_API_URL =
   'https://www.googleapis.com/youtube/v3/search';
 
