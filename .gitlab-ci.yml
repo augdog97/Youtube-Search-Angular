@@ -19,6 +19,12 @@ production:
     stage: production
     image: ruby:latest
     script:
+        - pwd
+        - echo "export const environment = { 
+  youtube:" > ~/environment.ts
+        -  echo \'"$youtube"\' >> ~/environment.ts
+        - echo "};" >> environment.ts
+        - cat environment.ts
         - dpl --provider=heroku --app=$HEROKU_APP_PRODUCTION --api-key=$HEROKU_API_KEY
     only:
         - master
