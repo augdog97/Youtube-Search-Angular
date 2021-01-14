@@ -6,6 +6,9 @@ import { Observable } from 'rxjs';
 import { SearchResult } from './search-result.model';
 import { environment} from '../environments/environment';
 
+console.log(__dirname);
+console.log(process.cwd());
+
 /**
  * 1. Injecting Http, and YOUTUBE API data.
  *  - making injectables instance variables, can access by this.http or this.apikey
