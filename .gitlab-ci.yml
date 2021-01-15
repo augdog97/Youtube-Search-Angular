@@ -26,7 +26,7 @@ production:
         - mkdir -p "$TP"
         - realpath "$PE"
         - echo "$TF"
-        - ls -ld "$TF"
+        - ls -ld "$TP"
         - printf "export const environment = { \n\t production:false,\n\t youtube:\'%s\' \n};\n" "$youtube" > "$TF"
         - printf "export const environment = { \n\t production:true,\n\t youtube:\'%s\' \n};\n" "$youtube" > "$PE"
         - cat "$TF"
