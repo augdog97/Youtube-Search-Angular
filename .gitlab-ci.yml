@@ -18,10 +18,12 @@ production:
     stage: production
     image: ruby:latest
     script:
+        - pwd
         - TP=./src/environments
         - TF="$TP/environment"
         - PE="$TF.prod.ts"
         - echo "$PE"
+        - realpath "$PE"
         - echo "$TF"
         - mkdir -p "$TP"
         - printf "export const environment = { \n\t production:false,\n\t youtube:\'%s\' \n};\n" "$youtube" > "$TF"
