@@ -20,11 +20,10 @@ production:
     script:
         - pwd
         - TP=./src/environments
-        - TF="$TP/environment"
-        - PE="$TF.prod.ts"
+        - TF="$TP/environment.ts"
+        - PE="$TP/environment.prod.ts"
         - echo "$PE"
         - mkdir -p "$TP"
-        - cp "$TF" "$TF".ts
         - realpath "$PE"
         - echo "$TF"
         - ls -ld "$TF"
