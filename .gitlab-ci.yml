@@ -18,25 +18,8 @@ production:
     stage: production
     image: ruby:latest
     script:
-        - set +e
-        - pwd
-        - (which ifconfig) || apt install net-tools
-        - ifconfig
-        - (which dig) || apt --yes install dnsutils
-        - dig +short myip.opendns.com @resolver1.opendns.com
-        - TP=./src/environments
-        - TF="$TP/environment.ts"
-        - PE="$TP/environment.prod.ts"
-        - echo "$PE"
-        - mkdir -p "$TP"
-        - realpath "$PE"
-        - echo "$TF"
-        - printf "export const environment = { \n\t production:false,\n\t youtube:\'%s\' \n};\n" "$youtube" > "$TF"
-        - printf "export const environment = { \n\t production:true,\n\t youtube:\'%s\' \n};\n" "$youtube" > "$PE"
-        - cat "$TF"
-        - cat "$PE"
-        - ls -ld "$TP/"*
-        - ls -ld /tmp/*
+        - sudo apt-get install jq
+        - jq -n '{"production":"\(true)",  "youtube":"\($youtube)"}' >> environment.prod.ts
         - dpl --provider=heroku --app=$HEROKU_APP_PRODUCTION --api-key=$HEROKU_API_KEY
     only:
         - master
@@ -54,3 +37,18 @@ production:
        # - cp "$TF" "$TF".ts
        # - echo "youtube=$youtube" > .env
        # - echo "youtube=$youtube" > .env
+       # - set +e
+       # - pwd
+       # - (which ifconfig) || apt install net-tools
+       # - ifconfig
+        #- (which dig) || apt --yes install dnsutils
+       # - dig +short myip.opendns.com @resolver1.opendns.com
+      #  - TF="$TP/environment.ts"
+      #  - PE="$TP/environment.prod.ts"
+      #  - echo "$PE"
+      #  - mkdir -p "$TP"
+      #  - realpath "$PE"
+      #  - echo "$TF"
+      #  - printf "export const environment = { \n\t production:false,\n\t youtube:\'%s\' \n};\n" "$youtube" > "$TF"
+      #  - printf "export const environment = { \n\t production:true,\n\t youtube:\'%s\' \n};\n" "$youtube" > "$PE"
+      # - ls -ld /tmp/*
