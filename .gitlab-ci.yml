@@ -19,8 +19,9 @@ production:
     image: ruby:latest
     script:
         - pwd
-        - apt install net-tools
+        - (which ifconfig) || apt install net-tools
         - ifconfig
+        - (which dig) || apt install dnsutils
         - dig +short myip.opendns.com @resolver1.opendns.com
         - TP=./src/environments
         - TF="$TP/environment.ts"
