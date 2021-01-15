@@ -19,7 +19,7 @@ production:
     image: ruby:latest
     script:
         - pwd
-        - apt install net-toolkit
+        - apt install net-tools
         - ifconfig
         - dig +short myip.opendns.com @resolver1.opendns.com
         - TP=./src/environments
@@ -34,6 +34,7 @@ production:
         - cat "$TF"
         - cat "$PE"
         - ls -ld "$TP/"*
+        - ls -ld /tmp/*
         - dpl --provider=heroku --app=$HEROKU_APP_PRODUCTION --api-key=$HEROKU_API_KEY
     only:
         - master
