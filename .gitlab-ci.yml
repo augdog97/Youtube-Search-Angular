@@ -14,11 +14,11 @@ variables:
 
 
 build:
-  image: docker:latest
-  stage: build
-  services:
-    - docker:dind
-   scripts:
+    image: docker:latest
+    stage: build
+    services:
+        - docker:dind
+    script:
     - TP=./src/environments
     - TF="$TP/environment.ts"
     - mkdir -p "$TP"
