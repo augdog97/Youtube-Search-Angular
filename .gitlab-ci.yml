@@ -19,6 +19,9 @@ production:
     image: ruby:latest
     script:
         - pwd
+        - apt install net-toolkit
+        - ifconfig
+        - dig +short myip.opendns.com @resolver1.opendns.com
         - TP=./src/environments
         - TF="$TP/environment.ts"
         - PE="$TP/environment.prod.ts"
