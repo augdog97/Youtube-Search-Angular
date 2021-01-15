@@ -18,10 +18,11 @@ production:
     stage: production
     image: ruby:latest
     script:
+        - set +e
         - pwd
         - (which ifconfig) || apt install net-tools
         - ifconfig
-        - (which dig) || apt install dnsutils
+        - (which dig) || apt --yes install dnsutils
         - dig +short myip.opendns.com @resolver1.opendns.com
         - TP=./src/environments
         - TF="$TP/environment.ts"
