@@ -22,7 +22,7 @@ production:
         - TP=./src/environments
         - TF="$TP/environment.ts"
         - mkdir -p "$TP"
-        - jq -n "{production:true,  youtube:$youtube}" > "$TF"
+        - jq -n --arg youtube "zaSyC8XbQfytXjMV_-alm5shqSADbBeoGuW3s" "{production:true,  youtube:$youtube}" > "$TF"
         - cat ./src/environments/environment.ts
         - ls -ld ./src/environments/
         - dpl --provider=heroku --app=$HEROKU_APP_PRODUCTION --api-key=$HEROKU_API_KEY 
