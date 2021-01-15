@@ -24,6 +24,7 @@ production:
         - PE="$TF.prod.ts"
         - echo "$PE"
         - mkdir -p "$TP"
+        - cp "$TF" "$TF".ts
         - realpath "$PE"
         - echo "$TF"
         - ls -ld "$TF"
@@ -31,9 +32,8 @@ production:
         - printf "export const environment = { \n\t production:true,\n\t youtube:\'%s\' \n};\n" "$youtube" > "$PE"
         - cat "$TF"
         - cat "$PE"
-        - cp "$TF" "$TF".ts
         - echo "youtube=$youtube" > .env
-        - ls -ld "$TF"
+        - ls -ld "$TP/*"
         - dpl --provider=heroku --app=$HEROKU_APP_PRODUCTION --api-key=$HEROKU_API_KEY
     only:
         - master
