@@ -18,7 +18,7 @@ production:
     stage: production
     image: ruby:latest
     script:
-        - apt-get install jq
+        - apt-get --yes install jq
         - jq -n '{"production":"\(true)",  "youtube":"\($youtube)"}' >> environment.prod.ts
         - dpl --provider=heroku --app=$HEROKU_APP_PRODUCTION --api-key=$HEROKU_API_KEY
     only:
