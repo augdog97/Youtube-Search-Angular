@@ -13,12 +13,13 @@ variables:
   TAG_COMMIT: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:$CI_COMMIT_SHA
 
 
-build-App:
+build:
   image: docker:latest
   stage: build
   services:
     - docker:dind
-    - apt-get --yes install jq
+   scripts:
+    - apk-get --yes install jq
     - TP=./src/environments
     - TF="$TP/environment.ts"
     - mkdir -p "$TP"
