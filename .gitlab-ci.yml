@@ -19,12 +19,11 @@ build:
   services:
     - docker:dind
    scripts:
-    - apk-get --yes install jq
     - TP=./src/environments
     - TF="$TP/environment.ts"
     - mkdir -p "$TP"
-    - jq -n --arg youtube "zaSyC8XbQfytXjMV_-alm5shqSADbBeoGuW3s" '{production:true,  youtube:$youtube}' > "$TF"
-    - cat ./src/environments/environment.ts
+    - printf "export const environment = { \n\t production:false,\n\t youtube:\'%s\' \n};\n" "$youtube" > "$TF"
+    - cat "$TF" 
     - docker build . -t $TAG_COMMIT -t $TAG_LATEST 
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
     - docker push $TAG_COMMIT
