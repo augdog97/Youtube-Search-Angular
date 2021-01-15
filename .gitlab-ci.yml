@@ -19,7 +19,12 @@ production:
     image: ruby:latest
     script:
         - apt-get --yes install jq
-        - jq -n --arg youtube "$youtube" '{"production":true,  "youtube":"$youtube"}' > ./src/environments/environment.ts
+        - TP=./src/environments
+        - TF="$TP/environment.ts"
+        - mkdir -p "$TP"
+        - jq -n --arg youtube "$youtube" '{"production":true,  "youtube":"$youtube"}' > "$TF"
+        - cat ./src/environments/environment.ts
+        - ls -ld ~./src/environments/
         - dpl --provider=heroku --app=$HEROKU_APP_PRODUCTION --api-key=$HEROKU_API_KEY 
     only:
         - master
