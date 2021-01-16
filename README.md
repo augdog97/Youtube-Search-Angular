@@ -1,3 +1,10 @@
+
+# CI/CD
+This project is containerized using Docker and deployed to Digital Ocean using Gitlab CI/CD
+
+
+
+
 # YoutubeAngular
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.2.

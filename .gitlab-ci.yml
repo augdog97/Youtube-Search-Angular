@@ -1,4 +1,3 @@
-
 # ssh-keyscan gitlab.com >> authorized_keys : use this command to add gitlab ssh keys to sever. Run on server terminal
 # cat ~/.ssh/id_rsa.pub >> authorized_keys : Run this command on the sever on the terminal. 
 # Both COMMANDS ABOVE ARE necessary.
@@ -20,9 +19,11 @@ build:
         - docker:dind
     script:
     - TP=./src/environments
-    - TF="$TP/environment.ts"
+    - TF="$TP/environment.prod.ts"
+    - PE="$TP/environment.ts"
     - mkdir -p "$TP"
-    - printf "export const environment = { \n\t production:false,\n\t youtube:\'%s\' \n};\n" "$youtube" > "$TF"
+    - printf "export const environment = { \n\t production:true,\n\t youtube:'%s' \n};\n" "$youtube" > "$TF"
+    - printf "export const environment = { \n\t production:false,\n\t youtube:'%s' \n};\n" "$youtube" > "$PE"
     - cat "$TF" 
     - docker build . -t $TAG_COMMIT -t $TAG_LATEST 
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
@@ -51,11 +52,10 @@ deploy-1:
     - ssh   -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY"
     - ssh  -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker pull $TAG_COMMIT"
     - ssh  -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker container rm -f my-app || true"
-    - ssh  -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d -p 80:3000 --name my-app $TAG_COMMIT"
+    - ssh  -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d -p 80:4200 --name my-app $TAG_COMMIT"
   environment:
     name: production
     url: http://167.172.20.103
   only:
     - master
-
 
